@@ -4,6 +4,8 @@ var MongoClient = require('mongodb').MongoClient;
 var DB_CONN_STR = 'mongodb://localhost:27017/mydb';
 var selectobj = require('./select')
 var insertobj = require('./insert')
+var updateobj = require('./update')
+var deleteobj = require('./delete')
 
 var port = process.env.PORT || 8080;
 var bodyparser = require('body-parser');
@@ -13,7 +15,7 @@ app.use(bodyparser.urlencoded({
   extended: true
 }));
 
-http.createServer(app).listen(80);
+http.createServer(app).listen(8080);
 
 //设置本地跨域问题
 app.all('*', function(req, res, next) {
@@ -53,10 +55,10 @@ app.get('/login', function (req, res) {
 app.get('/signin', function (req, res) {
   connect(selectobj.resighuserdb, req.query.username , function (result) {
     if (result == '') {
-      console.log('康')
+      console.log('空')
       connect(insertobj.insertData, { "username": req.query.username, "password": req.query.password}, function (result) {
         // res.send('you are the new') //用户不存在
-        res.send(result)
+        res.send(result);
       })
       return
     } else {
@@ -66,11 +68,22 @@ app.get('/signin', function (req, res) {
   })
 });
 
+app.get('/product',function (req, res) {
+  connect(selectobj.productdb, {},function (result) {
+    res.send(result)
+  })
+})
+
+app.get('/search',function (req,res) {
+  connect(selectobj.searchdb, req.query.productName,function (result) {
+    res.send(result);
+  })
+})
 
 //端口监听
-app.listen(port, function () {
-  console.log('Server listening on http://localhost:' + port);
-});
+// app.listen(port, function () {
+//   console.log('Server listening on http://localhost:' + port);
+// });
 
 // var mongoose = require('mongoose');
 // mongoose.connect('mongodb://localhost:27017/mydb') //连接本地数据库
