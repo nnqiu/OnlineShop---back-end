@@ -33,6 +33,7 @@ app.use(function(req, res, next) {
   next();
 });
 
+//连接数据库
 function connect(currtft, data, cb) {
   MongoClient.connect(DB_CONN_STR, function (err, db) {
     if (err) {
@@ -46,12 +47,14 @@ function connect(currtft, data, cb) {
   });
 } 
 
+//登录接口
 app.get('/login', function (req, res) {
   connect(selectobj.selectuserdb, {}, function (result) {
     res.send(result)
   })
 });
 
+//注册接口 先查后加
 app.get('/signin', function (req, res) {
   connect(selectobj.resighuserdb, req.query.username , function (result) {
     if (result == '') {
@@ -68,12 +71,14 @@ app.get('/signin', function (req, res) {
   })
 });
 
+//全部商品查询接口
 app.get('/product',function (req, res) {
   connect(selectobj.productdb, {},function (result) {
     res.send(result)
   })
 })
 
+//商品查询接口
 app.get('/search',function (req,res) {
   connect(selectobj.searchdb, req.query.productName,function (result) {
     res.send(result);
