@@ -85,6 +85,14 @@ app.get('/search',function (req,res) {
   })
 })
 
+//提交订单
+app.get('/add', function (req, res) {
+  connect(insertobj.addData, { "person": req.query.person, "address": req.query.address, "tel": req.query.tel, "pay": req.query.pay }, function (result) {
+    res.send(result);
+  })
+})
+
+
 //端口监听
 // app.listen(port, function () {
 //   console.log('Server listening on http://localhost:' + port);
