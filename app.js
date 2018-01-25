@@ -17,7 +17,7 @@ app.use(bodyparser.urlencoded({
 
 http.createServer(app).listen(8080);
 
-//设置本地跨域问题
+//设置本地跨域问题 设置HTTP响应头解决跨域
 app.all('*', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
@@ -27,7 +27,7 @@ app.all('*', function(req, res, next) {
   next();
 });
 
-//应用级中间件
+//应用级中间件 每个请求都执行的中间件
 app.use(function(req, res, next) {
   console.log('服务器接收到一条请求时间为' + new Date().toLocaleTimeString());
   next();
