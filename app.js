@@ -49,7 +49,7 @@ function connect(currtft, data, cb) {
 
 //登录接口
 app.get('/login', function (req, res) {
-  connect(selectobj.selectuserdb, {}, function (result) {
+  connect(selectobj.selectuserdb, { "username": req.query.username, "password": req.query.password }, function (result) {
     res.send(result)
   })
 });
