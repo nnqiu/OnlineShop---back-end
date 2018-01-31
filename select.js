@@ -1,3 +1,4 @@
+//登录
 exports.selectuserdb = function (db, data, callback) {
   var collection = db.collection('user');
   var whereStr = { "username": data.username,"password": data.password };
@@ -10,6 +11,7 @@ exports.selectuserdb = function (db, data, callback) {
   });
 }
 
+//注册
 exports.resighuserdb = function (db, data, callback) {
   var collection = db.collection('user');
   var whereStr = { "username": data };
@@ -22,6 +24,7 @@ exports.resighuserdb = function (db, data, callback) {
   });
 }
 
+//查询所有产品
 exports.productdb = function (db, data, callback) {
   var collection = db.collection('product');
   collection.find().toArray(function (err, result) {
@@ -33,6 +36,7 @@ exports.productdb = function (db, data, callback) {
   });
 }
 
+//搜索
 exports.searchdb = function (db ,data, callback) {
   var collection = db.collection('product');
   var whereStr = { "productname": data };
